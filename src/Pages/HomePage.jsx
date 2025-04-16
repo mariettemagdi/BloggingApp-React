@@ -1,10 +1,10 @@
-import React from 'react'
 import NavBar from '../Components/NavBar'
 import Post from '../Components/Post'
 import Pagination from '../Components/Pagination'
 import PostButton from '../Components/PostButton'
 
-export default function HomePage() {
+export default function HomePage({posts,noOfPages,currentPage,handleCurrentPage,handleDeletePost}) {
+ const pages=Array(noOfPages).fill().map((itm,i)=>i+1)
   return (
     <>
       <NavBar/>
@@ -12,13 +12,12 @@ export default function HomePage() {
       <PostButton/>
     <h1 className='text-[#806A50] text-3xl font-bold mb-4'>Posts</h1>
     <div className="bg-gray-50 min-h-screen p-6">
-         <Post/>
-         <Post/>
-         <Post/>
-         <Post/>
+      {posts.map((post)=>
+          <Post key={post.id} data={post} handleDeletePost={handleDeletePost}/>
+      )}
       </div>
       <div className='flex align-center justify-center m-5'>
-        <Pagination/>
+        <Pagination pages={pages} noOfPages={noOfPages} currentPage={currentPage} handleCurrentPage={handleCurrentPage}/>
       </div>
     </div>
     </>

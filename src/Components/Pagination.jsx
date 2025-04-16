@@ -1,12 +1,12 @@
 import React from 'react'
 
-export default function Pagination() {
+export default function Pagination({pages,noOfPages,currentPage,handleCurrentPage}) {
+  console.log(pages)
   return (
-    <div className="join">
-    <button className="join-item btn btn-lg hover:bg-[#cca97f]">1</button>
-    <button className="join-item btn btn-lg hover:bg-[#cca97f] bg-[#2DA2B7] text-white">2</button>
-    <button className="join-item btn btn-lg hover:bg-[#cca97f]">3</button>
-    <button className="join-item btn btn-lg hover:bg-[#cca97f]">4</button>
-  </div>  
+    <>
+   {noOfPages>1 && <div className="join">
+    {pages.map(page=> <button key={page} className={`join-item btn btn-lg hover:bg-[#cca97f] ${currentPage===page && "bg-[#2DA2B7]  text-white"} `} onClick={()=>handleCurrentPage(page)}>{page}</button>)}
+  </div> }
+  </>
   )
 }

@@ -1,17 +1,17 @@
 import React from 'react'
 
-export default function Post() {
+export default function Post({data,handleDeletePost}) {
   return (
     <>
       <div className="container mx-auto px-4 py-3 max-w-7xl">
         <div className="card bg-base-100 shadow-xl mb-4">
           <div className="card-body p-6">
-                <h1 className="card-title text-3xl font-bold mb-4 text-[#2DA2B7]">Lorem Ipsum</h1>
+                <h1 className="card-title text-3xl font-bold mb-4 text-[#2DA2B7]">{data.title}</h1>
            <div className='flex items-start gap-6'>
             <div className='flex-1'>
             <p className="mb-4 text-gray-700 leading-relaxed">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-              </p>
+              {data.body}
+            </p>
             </div>
             <div className="w-1/3 flex-shrink-0"> 
               <img src='/src/assets/img/discover-1.png' alt="img"/>
@@ -31,7 +31,7 @@ export default function Post() {
             </div>
               <div className="flex items-center gap-2">
               <button className="btn p-5 bg-[#2da2b7] hover:bg-[#2AAFE8] text-white"><span className="font-semibold">Edit</span></button>
-              <button className="btn btn-error text-white"> <span className="font-semibold">Delete</span></button>               
+              <button className="btn btn-error text-white"> <span className="font-semibold" onClick={()=>handleDeletePost(data.id)}>Delete</span></button>               
               </div>
             </div>
           </div>
