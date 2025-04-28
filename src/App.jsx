@@ -3,7 +3,9 @@ import './App.css'
 import HomePage from './Pages/HomePage'
 import {Routes, Route } from "react-router";
 import NewPost from './Pages/NewPost';
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 function App() {
   const [posts,setPosts]=useState([])
@@ -36,20 +38,43 @@ function App() {
     setCurrentPage(page)
   }
 
+  //add new Post 
+  const handleNewPost=(post)=>{
+
+    const newPosts=[...posts,post];
+    toast("New Post Added");
+    setPosts(newPosts);
+  }
+
   //delete post 
-  const handleDeletePost=(id)=>{
+  const handleDeletePost=async(id)=>{
     //clone
+    console.log(typeof(id));
     const newPosts=posts.filter((post)=>(post.id!=id))
     //edit
     //setState
+    toast("Post Deleted Successfully");
+    const newTotalPages=Math.ceil(newPosts.length/pageSize)
+    if(currentPage>newTotalPages && newTotalPages > 0){
+      setCurrentPage(newTotalPages);
+    }
+    try {
+      const res = await axios.delete(`http://localhost:3000/posts/${id}`);
+      console.log("Post deleted successfully:", res);
+    } catch (error) {
+      console.log("Error deleting post:", error);
+    }    // const res=await axios.delete(`http://localhost:3000/posts/${id}`);
+    // console.log(res);
     setPosts(newPosts)
+
 
   }
   return (
     <>
+    <ToastContainer/>
      <Routes>
-        <Route path="/" element={<HomePage posts={slicedposts} noOfPages={noOfPages} currentPage={currentPage} handleCurrentPage={handleCurrentPage} handleDeletePost={handleDeletePost}/>}/>
-        <Route path="/newPost" element={<NewPost/>}/>
+        <Route path="/" element={<HomePage posts={slicedposts} noOfPages={noOfPages} currentPage={currentPage} handleCurrentPage={handleCurrentPage} handleDeletePost={handleDeletePost} />}/>
+        <Route path="/newPost" element={<NewPost handleNewPost={handleNewPost} posts={posts}/>}/>
      </Routes>
     </>
   )

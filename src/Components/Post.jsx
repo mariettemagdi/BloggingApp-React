@@ -1,4 +1,7 @@
 import React from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Post({data,handleDeletePost}) {
   return (
@@ -13,10 +16,10 @@ export default function Post({data,handleDeletePost}) {
               {data.body}
             </p>
             </div>
-            <div className="w-1/3 flex-shrink-0"> 
-              <img src='/src/assets/img/discover-1.png' alt="img"/>
-            </div>
-           </div>
+           { data.imgURL && <div className="w-1/3 flex-shrink-0"> 
+              <img src={data.imgURL} alt="img"/>
+            </div>}
+           </div> 
             <div className="flex justify-between flex-wrap gap-4 text-sm text-gray-500 leading-tight mt-4">
             <div className="flex items-center gap-4"> 
               <div className="avatar">
