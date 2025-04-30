@@ -11,10 +11,27 @@ export default function NewPost({handleNewPost,posts}) {
 
   const handleSubmit=async(e)=>{
     e.preventDefault();
+    let imageUrl=null;
+    // upload image if file is selected
+    if(file){
+      const formData= new FormData();
+      console.log(formData);
+      formData.append('image',file);
+      try{
+         const res=await axios.post('https://api.imgbb.com/1/upload?key=a51a3174748da0660e015c935563ae87',formData);
+         console.log(res.data);
+         imageUrl=res.data.data.url;
+      }
+      catch(error){
+      console.log(error);
+       return;
+
+      }
+    }
     const newPost={
         title,
         body:content,
-        image:file ? URL.createObjectURL(file):null,
+        imgURL:imageUrl ? imageUrl:null,
     };
     handleNewPost(newPost);
     const {data}=await axios.post("http://localhost:3000/posts",newPost);

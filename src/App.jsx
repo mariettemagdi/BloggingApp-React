@@ -6,6 +6,7 @@ import NewPost from './Pages/NewPost';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import RegisterPage from './Pages/RegisterPage';
 
 function App() {
   const [posts,setPosts]=useState([])
@@ -75,6 +76,8 @@ function App() {
      <Routes>
         <Route path="/" element={<HomePage posts={slicedposts} noOfPages={noOfPages} currentPage={currentPage} handleCurrentPage={handleCurrentPage} handleDeletePost={handleDeletePost} />}/>
         <Route path="/newPost" element={<NewPost handleNewPost={handleNewPost} posts={posts}/>}/>
+        <Route path="/register" element={<RegisterPage />}/>
+        <Route path="/login" element={<LoginPage />}/>
      </Routes>
     </>
   )
