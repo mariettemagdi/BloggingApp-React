@@ -1,5 +1,6 @@
 import React from 'react'
 import LoginForm from '../Components/LoginForm'
+import LogoSide from '../Components/LogoSide'
 
 export default function LoginPage({onLogin}) {
   return (
@@ -7,10 +8,7 @@ export default function LoginPage({onLogin}) {
         <div className='w-1/2 bg-base-200 p-8'>
           <LoginForm onLogin={onLogin} />
         </div>
-        <div className="w-1/2 bg-base-300 p-8">
-        <h2 className="text-2xl font-bold mb-4">Write,Think, Innovate   </h2>
-        <p>Your content goes here...</p>
-      </div>
+       <LogoSide />
     </div>
   )
 }

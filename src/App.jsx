@@ -107,8 +107,13 @@ function App() {
       console.log("Error deleting post:", error);
     }  
     setPosts(newPosts)
-
   }
+
+  // edit post
+  const handleEditPost=(updatedPost)=>{
+   setPosts(posts.map(post=>post.id === updatedPost.id ? updatedPost:post)); 
+  }
+
   return (
     <>
     <ToastContainer/>
@@ -123,7 +128,7 @@ function App() {
            username={username}
            onLogout={handleLogout}
            userId={userId} />}/>
-        <Route path="/newPost" element={<NewPost handleNewPost={handleNewPost} posts={posts}/>}/>
+        <Route path="/newPost" element={<NewPost handleNewPost={handleNewPost} currentUserId={userId} handleEditPost={handleEditPost}/>}/>
         <Route path="/register" element={<RegisterPage />}/>
         <Route path="/login" element={<LoginPage onLogin={handleLogin}/>}/>
      </Routes>
