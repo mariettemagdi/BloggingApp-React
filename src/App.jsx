@@ -15,12 +15,33 @@ function App() {
   const [currentPage,setCurrentPage]=useState(1)
   const [isLoggedIn,setIsLoggedIn]=useState(false);
   const[username,setUsername]=useState('');
- const navigate=useNavigate();
+  const [userId,setUserId]=useState(null);
 
+ const navigate=useNavigate();
+ // prevent logging out while refreshing 
+ useEffect(()=>{
+  fetchPosts();
+  initializeAuth();
+ },[])
+
+ const initializeAuth=()=>{
+  const token=localStorage.getItem('authToken');
+  if(token){
+    axios.get(`http://localhost:3000/users?token=${token}`)
+    .then(res=>{
+      if(res.data.length>0){
+        setUsername(res.data[0].name);
+        setUserId(res.data[0].id);
+        setIsLoggedIn(true);
+      }
+    })
+  }
+ }
   //handle log In to didplay username
-  const handleLogin=(name,token)=>{
+  const handleLogin=(name,token,userId)=>{
     localStorage.setItem('authToken',token);
     setIsLoggedIn(true);
+    setUserId(userId);
     // console.log(data)
     setUsername(name);
     toast.success(`Welcome Back, ${name}`);
@@ -31,6 +52,7 @@ function App() {
     localStorage.removeItem('authToken');
     toast.success('Logged out Successfully');
     setIsLoggedIn(false)
+    setUserId(null)
     setUsername('')
     navigate('/login');
 
@@ -47,9 +69,6 @@ function App() {
       console.log("Error in fetching data")
     }
   }
-  useEffect(()=>{
-      fetchPosts();
-  },[])
 
   //pagination
   const noOfPages=Math.ceil(posts.length/pageSize)
@@ -86,10 +105,8 @@ function App() {
       console.log("Post deleted successfully:", res);
     } catch (error) {
       console.log("Error deleting post:", error);
-    }    // const res=await axios.delete(`http://localhost:3000/posts/${id}`);
-    // console.log(res);
+    }  
     setPosts(newPosts)
-
 
   }
   return (
@@ -104,7 +121,8 @@ function App() {
            handleDeletePost={handleDeletePost}
            isLoggedIn={isLoggedIn}
            username={username}
-           onLogout={handleLogout} />}/>
+           onLogout={handleLogout}
+           userId={userId} />}/>
         <Route path="/newPost" element={<NewPost handleNewPost={handleNewPost} posts={posts}/>}/>
         <Route path="/register" element={<RegisterPage />}/>
         <Route path="/login" element={<LoginPage onLogin={handleLogin}/>}/>

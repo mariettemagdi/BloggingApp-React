@@ -1,11 +1,29 @@
-import React from 'react'
+import React, { useEffect ,useState} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function Post({data,handleDeletePost,currentUsername}) {
-  // console.log('post',data);
-  // const isAuthor = currentUsername && currentUsername.id==data.userId;
+export default function Post({data,handleDeletePost,currentUsername,currentUserId}) {
+  const [authorName,setAuthorName]=useState('');
+  const isAuthor = currentUserId && currentUserId === data.userId;
+  useEffect(()=>{
+    const fetchAuthorName=async()=>{
+      try{
+        const response=await fetch(`http://localhost:3000/users?id=${data.userId}`);
+        const users= await response.json();
+        console.log(users[0]); //undefined why ???
+        if(users.length>0){
+          setAuthorName(users[0].name)
+        }else{
+          setAuthorName('Unkonown Author')
+        }
+      }catch(error){
+        console.error('Error fetching author:', error);
+
+      }
+    }
+    fetchAuthorName();
+  },[data.userId]);
   return (
     <>
       <div className="container mx-auto px-4 py-3 max-w-7xl">
@@ -31,13 +49,15 @@ export default function Post({data,handleDeletePost,currentUsername}) {
               </div>
               <div className="flex flex-col items-left gap-1">
                 <span className="font-semibold text-[#b9b9b9]">Author:</span>
-                <span className='font-bold text-[#686868 ]'>Manlette Magell</span>
+                <span className='font-bold text-[#686868 ]'>{authorName}</span>
               </div>
             </div>
+            {isAuthor && (
               <div className="flex items-center gap-2">
               <button className="btn p-5 bg-[#2da2b7] hover:bg-[#2AAFE8] text-white"><span className="font-semibold">Edit</span></button>
               <button className="btn btn-error text-white"> <span className="font-semibold" onClick={()=>handleDeletePost(data.id)}>Delete</span></button>               
               </div>
+             )}
             </div>
           </div>
         </div>

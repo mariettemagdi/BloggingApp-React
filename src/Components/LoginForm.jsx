@@ -46,7 +46,7 @@ export default function LoginForm({onLogin}) {
             throw new error('Invalid password');
           }
           const {accessToken}=await response.json();
-          onLogin(formData.username,accessToken)
+          onLogin(formData.username,accessToken,formData.id)
           navigate('/');
         }catch(error){
            toast.error("Can't Login");
