@@ -2,6 +2,7 @@ import React,{ useState } from 'react'
 import FormInput from './FormInput'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 
 export default function RegisterForm() {
  const [formData,setFormData]=useState({
@@ -27,11 +28,11 @@ const handleSubmit=async(e)=>{
         return toast.error('Password do not match');
     }
     try{
-        const response= await fetch('http://localhost:3000/users',{
+        const response= await fetch('http://localhost:3000/register',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
-                username: formData.username,
+                name: formData.username,
                 email: formData.email,
                 password: formData.password,
             }),
@@ -40,7 +41,6 @@ const handleSubmit=async(e)=>{
         if(response.ok){
             toast.success('Account Created Successfully');
             navigate('/');
-
         }
         else{
             toast.error('Registration failed');
@@ -113,7 +113,7 @@ const handleSubmit=async(e)=>{
         />
         
         <button type="submit" className="btn btn-accent mt-3">Register</button>
-        <span className='mt-3  text-xs text-center'>Already have an accout? <a href="#" className="underline underline-offset-2">Sign In</a></span>
+        <span className='mt-3  text-xs text-center'>Already have an accout? <Link to="/login" href="#" className="underline underline-offset-2">Sign In</Link></span>
 
     </form>
     </div>

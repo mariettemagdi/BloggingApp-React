@@ -154,16 +154,10 @@
   ],
   "users": [
     {
-      "username": "mary23",
-      "email": "m@m.com",
-      "password": "123Mary123",
+      "email": "hek@helo.com",
+      "password": "$2a$10$s3B3HqHWZt9FnW2hpP3fWexYdKIQsvSMUbAWNqunv89.GUXoK87J6",
+      "name": "helo",
       "id": 1
-    },
-    {
-      "username": "john",
-      "email": "john@doe.com",
-      "password": "123John123",
-      "id": 2
     }
   ]
 }

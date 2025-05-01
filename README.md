@@ -13,3 +13,5 @@ If you are developing a production application, we recommend using TypeScript an
 
 cd db
 npx json-server --watch data.json --port 3000
+npx json-server --watch data.json --middlewares ./node_modules/json-server-auth
+npx json-server-auth data.json

@@ -1,18 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import HomePage from './Pages/HomePage'
-import {Routes, Route } from "react-router";
+import {Routes, Route, useNavigate } from "react-router";
 import NewPost from './Pages/NewPost';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import RegisterPage from './Pages/RegisterPage';
+import LoginPage from './Pages/LoginPage';
 
 function App() {
   const [posts,setPosts]=useState([])
   const pageSize=5;
   const [currentPage,setCurrentPage]=useState(1)
+  const [isLoggedIn,setIsLoggedIn]=useState(false);
+  const[username,setUsername]=useState('');
+ const navigate=useNavigate();
 
+  //handle log In to didplay username
+  const handleLogin=(name,token)=>{
+    localStorage.setItem('authToken',token);
+    setIsLoggedIn(true);
+    // console.log(data)
+    setUsername(name);
+    toast.success(`Welcome Back, ${name}`);
+  }
+
+  //logout
+  const handleLogout=()=>{
+    localStorage.removeItem('authToken');
+    toast.success('Logged out Successfully');
+    setIsLoggedIn(false)
+    setUsername('')
+    navigate('/login');
+
+  };
 
   //fetch data 
   const fetchPosts=async()=>{
@@ -74,10 +96,18 @@ function App() {
     <>
     <ToastContainer/>
      <Routes>
-        <Route path="/" element={<HomePage posts={slicedposts} noOfPages={noOfPages} currentPage={currentPage} handleCurrentPage={handleCurrentPage} handleDeletePost={handleDeletePost} />}/>
+        <Route path="/" element={<HomePage
+           posts={slicedposts} 
+           noOfPages={noOfPages} 
+           currentPage={currentPage} 
+           handleCurrentPage={handleCurrentPage} 
+           handleDeletePost={handleDeletePost}
+           isLoggedIn={isLoggedIn}
+           username={username}
+           onLogout={handleLogout} />}/>
         <Route path="/newPost" element={<NewPost handleNewPost={handleNewPost} posts={posts}/>}/>
         <Route path="/register" element={<RegisterPage />}/>
-        <Route path="/login" element={<LoginPage />}/>
+        <Route path="/login" element={<LoginPage onLogin={handleLogin}/>}/>
      </Routes>
     </>
   )

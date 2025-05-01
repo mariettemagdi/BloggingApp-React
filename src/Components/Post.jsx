@@ -3,7 +3,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function Post({data,handleDeletePost}) {
+export default function Post({data,handleDeletePost,currentUsername}) {
+  // console.log('post',data);
+  // const isAuthor = currentUsername && currentUsername.id==data.userId;
   return (
     <>
       <div className="container mx-auto px-4 py-3 max-w-7xl">
