@@ -12,7 +12,7 @@ export default function HomePage({posts,noOfPages,currentPage,handleCurrentPage,
        username={username} 
        onLogout={onLogout}/>
     <div className='max-w-5xl mx-auto mt-7 px-4'>
-      <PostButton/>
+     {isLoggedIn && <PostButton/>}
     <h1 className='text-[#806A50] text-3xl font-bold mb-4'>Posts</h1>
     <div className="bg-gray-50 min-h-screen p-6">
       {posts.map((post)=>
