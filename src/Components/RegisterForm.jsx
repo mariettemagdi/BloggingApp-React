@@ -43,7 +43,7 @@ const handleSubmit=async(e)=>{
             navigate('/login');
         }
         else{
-            toast.error('Registration failed');
+            toast.error('User already exist !');
         }
     }
     catch(error){
