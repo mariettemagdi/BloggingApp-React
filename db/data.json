@@ -197,6 +197,12 @@
       "password": "$2a$10$ZyfkC6n2OliMKk6Hagko5uvLOkJ7FL4OWyukbWBj04UxWXK.7N/D2",
       "name": "karim",
       "id": 4
+    },
+    {
+      "email": "s@s.com",
+      "password": "$2a$10$RJ7GInF1/b5lZi65DkxIG.e4D2EAUSvlERmLcejqqFNMO84cobWUG",
+      "name": "sam",
+      "id": 5
     }
   ]
 }
