@@ -5,14 +5,15 @@ import axios from 'axios';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function NewPost({handleNewPost,currentUserId,handleEditPost}) {
+export default function NewPost({handleNewPost,currentUserId,handleEditPost,isLoggedIn,username,onLogout}) {
   const [file,setFile]=useState(null);
   const [buttonText,setButtonText]=useState("Post")
   const [form,setForm]=useState({
     title:'',
     body:'',
     imgURL: null,
-    id:null
+    id:null,
+    userId:currentUserId
   })
 
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function NewPost({handleNewPost,currentUserId,handleEditPost}) {
 
   useEffect(()=>{
     if(location.state && location.state.postToEdit){
-         setForm(location.state.postToEdit)
+         setForm({...location.state.postToEdit,userId:currentUserId})
          setButtonText("Edit")
     }
   },[location.state])
@@ -40,26 +41,26 @@ export default function NewPost({handleNewPost,currentUserId,handleEditPost}) {
         formData.append('image',file);
         const res=await axios.post('https://api.imgbb.com/1/upload?key=a51a3174748da0660e015c935563ae87',formData);
         //console.log(res.data);
-        imageUrl=res.data.data.url;
+        imageUrl=res.data.data.url; 
+    }
       const postData={
         ...form,
         imgURL:imageUrl,
         userId:currentUserId
       };
-       //edit
+      //edit
     if(form.id){
       const { data } = await axios.put(`http://localhost:3000/posts/${form.id}`,postData);
       handleEditPost(data);
       toast.success("Post Updated Successfully !"); 
     }
-    else{
-      //create
-      const {data}=await axios.post("http://localhost:3000/posts",postData);
-      handleNewPost(data);
-      toast.success("Post Published Successfully");
-    }
-    navigate('/');    
-    }
+  else{
+    //create
+    const {data}=await axios.post("http://localhost:3000/posts",postData);
+    handleNewPost(data);
+    toast.success("Post Published Successfully");
+  }
+  navigate('/');   
   }catch (error) {
     console.error("Operation failed:", error);
     toast.error("Failed to save post");
@@ -68,7 +69,10 @@ export default function NewPost({handleNewPost,currentUserId,handleEditPost}) {
    
   return (
     <>
-    <NavBar/>
+    <NavBar  
+        isLoggedIn={isLoggedIn} 
+        username={username} 
+        onLogout={onLogout}/>
     <div className='flex justify-center  min-h-screen p-8 w-full bg-gray-100'>
       <div className='bg-white rounded border border-amber-50 shadow p-8 w-full max-w-4xl h-fit flex gap-8'>
         <div className='flex flex-col gap-4 w-full'>

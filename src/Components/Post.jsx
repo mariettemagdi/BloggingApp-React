@@ -7,15 +7,16 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Post({data,handleDeletePost,currentUsername,currentUserId}) {
   const [authorName,setAuthorName]=useState('');
   const navigate=useNavigate();
+  console.log('Current User ID:', currentUserId, 'Post User ID:', data.userId);
   const isAuthor = currentUserId && currentUserId === data.userId;
   useEffect(()=>{
     const fetchAuthorName=async()=>{
       try{
-        const response=await fetch(`http://localhost:3000/users?id=${data.userId}`);
-        const users= await response.json();
-        console.log(users[0]); //undefined why ???
-        if(users.length>0){
-          setAuthorName(users[0].name)
+        const response=await fetch(`http://localhost:3000/users/${data.userId}`);
+        const user= await response.json();
+        console.log(user);
+        if(user &&user.name){
+          setAuthorName(user.name)
         }else{
           setAuthorName('Unkonown Author')
         }

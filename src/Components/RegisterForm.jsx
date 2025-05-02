@@ -40,7 +40,7 @@ const handleSubmit=async(e)=>{
         const data=await response.json();
         if(response.ok){
             toast.success('Account Created Successfully');
-            navigate('/');
+            navigate('/login');
         }
         else{
             toast.error('Registration failed');

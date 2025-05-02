@@ -152,12 +152,6 @@
       "userId": 3
     },
     {
-      "title": "hgg",
-      "body": "fgggf",
-      "imgURL": "https://i.ibb.co/Fq4k0hTs/il-794x-N-6735545417-jser.jpg",
-      "id": "sW9uj2Z"
-    },
-    {
       "title": "hello",
       "body": "helo user is writing his first post",
       "imgURL": null,
@@ -170,6 +164,13 @@
       "imgURL": "https://i.ibb.co/Fq4k0hTs/il-794x-N-6735545417-jser.jpg",
       "id": "pJxvpC4",
       "userId": 1
+    },
+    {
+      "title": "front end of e-commerce website ",
+      "body": "welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project welcome to our front end project ",
+      "imgURL": "https://i.ibb.co/v6P43NcC/hamburger.jpg",
+      "id": "bFaZuGR",
+      "userId": 4
     }
   ],
   "users": [
@@ -190,6 +191,12 @@
       "password": "$2a$10$tZ5nAN6trP5ziIsQ0tcZbuzRUtTn2elu6JCqgd2VHqPj3LOMBdA5W",
       "name": "mariette",
       "id": 3
+    },
+    {
+      "email": "k@k.com",
+      "password": "$2a$10$ZyfkC6n2OliMKk6Hagko5uvLOkJ7FL4OWyukbWBj04UxWXK.7N/D2",
+      "name": "karim",
+      "id": 4
     }
   ]
 }

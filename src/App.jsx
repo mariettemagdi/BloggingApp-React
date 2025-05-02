@@ -26,13 +26,26 @@ function App() {
 
  const initializeAuth=()=>{
   const token=localStorage.getItem('authToken');
-  if(token){
+  const storedAuth = localStorage.getItem('authData');
+  if(storedAuth){
+    const { username, userId } = JSON.parse(storedAuth);
+    setUsername(username);
+    setUserId(userId);
+    setIsLoggedIn(true);
+    return; 
+  }
+  else if(token){
     axios.get(`http://localhost:3000/users?token=${token}`)
     .then(res=>{
       if(res.data.length>0){
         setUsername(res.data[0].name);
         setUserId(res.data[0].id);
         setIsLoggedIn(true);
+         // Cache the data
+         localStorage.setItem('authData', JSON.stringify({
+          username: user.name,
+          userId: user.id
+        }));
       }
     })
   }
@@ -40,9 +53,13 @@ function App() {
   //handle log In to didplay username
   const handleLogin=(name,token,userId)=>{
     localStorage.setItem('authToken',token);
+    localStorage.setItem('authData', JSON.stringify({
+      username: name,
+      userId: userId
+    }));
     setIsLoggedIn(true);
     setUserId(userId);
-    // console.log(data)
+    console.log("app.jsx",userId)
     setUsername(name);
     toast.success(`Welcome Back, ${name}`);
   }
@@ -50,6 +67,7 @@ function App() {
   //logout
   const handleLogout=()=>{
     localStorage.removeItem('authToken');
+    localStorage.removeItem('authData');
     toast.success('Logged out Successfully');
     setIsLoggedIn(false)
     setUserId(null)
@@ -84,7 +102,7 @@ function App() {
   const handleNewPost=(post)=>{
 
     const newPosts=[...posts,post];
-    toast("New Post Added");
+    // toast("New Post Added");
     setPosts(newPosts);
   }
 
@@ -128,7 +146,8 @@ function App() {
            username={username}
            onLogout={handleLogout}
            userId={userId} />}/>
-        <Route path="/newPost" element={<NewPost handleNewPost={handleNewPost} currentUserId={userId} handleEditPost={handleEditPost}/>}/>
+        <Route path="/newPost" element={<NewPost handleNewPost={handleNewPost} currentUserId={userId} handleEditPost={handleEditPost} isLoggedIn={isLoggedIn} username={username}
+         onLogout={handleLogout}/>}/>
         <Route path="/register" element={<RegisterPage />}/>
         <Route path="/login" element={<LoginPage onLogin={handleLogin}/>}/>
      </Routes>
