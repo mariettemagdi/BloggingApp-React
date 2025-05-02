@@ -6,8 +6,7 @@ import PostButton from '../Components/PostButton'
 export default function HomePage({posts,noOfPages,currentPage,handleCurrentPage,handleDeletePost,isLoggedIn,username,onLogout,userId}) {
   // console.log("alooo",username)
   // console.log("alooo",userId)
-  console.log('Loaded from localStorage:', localStorage.getItem('userId'), localStorage.getItem('username'));
-console.log('React State:', userId, username);
+ 
  const pages=Array(noOfPages).fill().map((itm,i)=>i+1)
   return (
     <>
